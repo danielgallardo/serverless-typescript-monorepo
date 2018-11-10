@@ -1,0 +1,47 @@
+service: second-service
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-webpack
+
+package:
+  individually: true
+
+custom:
+  config: ${file(../../config.yml):${self:provider.stage}}
+  prefix: ${self:custom.config.projectName}-${self:provider.stage}
+
+  webpack:
+    webpackConfig: ../../webpack.config.js
+    includeModules: true
+    packager: yarn
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.config.region}
+  stackName: ${self:custom.prefix}-${self:service}
+
+  environment:
+    DEBUG: true
+
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': ${self:custom.config.projectName}-restApiId
+    restApiRootResourceId:
+      'Fn::ImportValue': ${self:custom.config.projectName}-rootResourceId
+
+functions:
+  postEcho:
+    handler: postEcho/handler.default
+    name: ${self:custom.prefix}-${self:service}-postEcho
+    environment:
+      CURRENT_STAGE: ${self:provider.stage}
+      
+    iamRoleStatements: []
+    events:
+      - http:
+          path: '/echo'
+          method: post
+          cors: true

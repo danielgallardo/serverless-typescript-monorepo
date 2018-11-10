@@ -1,0 +1,12 @@
+{
+  "name": "second-service",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "cd .. && yarn test --testPathPattern src/secondService"
+  },
+  "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
+}

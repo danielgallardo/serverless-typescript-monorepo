@@ -1,0 +1,20 @@
+# Logs
+npm-debug.log
+
+# Dependency directory
+node_modules/
+src/*/node_modules/
+
+# IDE Stuff
+**/.idea
+
+# OS STUFF
+.DS_Store
+.tmp
+
+# SERVERLESS STUFF
+.env
+**/.serverless
+**/.webpack
+**/*.pem
+toCopy.ts

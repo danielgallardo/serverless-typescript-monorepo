@@ -1,0 +1,47 @@
+# The root service is only used to deploy shared resources
+# like dynamoDB tables, IAM roles etc.
+
+service: ${self:custom.config.projectName}
+
+custom:
+  config: ${file(./config.yml):${self:provider.stage}}
+  prefix: ${self:custom.config.projectName}-${self:provider.stage}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.config.region}
+  
+  # define a shared api gateway instance
+  # every service will use one root api url
+  apiGateway:
+    restApiId:
+      Ref: SharedApiGateway
+    restApiResources:
+      Fn::GetAtt:
+        - SharedApiGateway
+        - RootResourceId
+      
+resources:
+  Resources:
+    SharedApiGateway:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:custom.config.apiGatewayName}
+        
+  Outputs:
+    ApiGatewayRestApiId:
+      Value:
+        Ref: SharedApiGateway
+      Export:
+        Name: ${self:custom.config.projectName}-restApiId
+  
+    ApiGatewayRestApiRootResourceId:
+      Value:
+        Fn::GetAtt:
+          - SharedApiGateway
+          - RootResourceId
+      Export:
+        Name: ${self:custom.config.projectName}-rootResourceId
+        

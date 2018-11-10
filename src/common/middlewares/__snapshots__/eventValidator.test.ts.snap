@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`eventValidator should be compatable with apiRequestRoutine 1`] = `
+Object {
+  "body": "{\\"foo\\":\\"bar\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 200,
+}
+`;
+
+exports[`eventValidator should pass validation with correct schema 1`] = `
+Object {
+  "foo": "bar",
+}
+`;
+
+exports[`eventValidator should respond with http error with apiRequestRoutine when schema is invalid 1`] = `
+Object {
+  "body": "{\\"status\\":\\"UnprocessableEntityError\\",\\"statusCode\\":422,\\"message\\":\\"\\\\\\"bar\\\\\\" is required\\",\\"details\\":[{\\"message\\":\\"\\\\\\"bar\\\\\\" is required\\",\\"path\\":[\\"body\\",\\"bar\\"],\\"type\\":\\"any.required\\",\\"context\\":{\\"key\\":\\"bar\\",\\"label\\":\\"bar\\"}}]}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 422,
+}
+`;
+
+exports[`eventValidator should strip unknown params by default 1`] = `
+Object {
+  "foo": "bar",
+}
+`;

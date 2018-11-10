@@ -1,0 +1,58 @@
+{
+  "name": "serverless-typescript-monorepo",
+  "version": "1.0.0",
+  "description": "A serverless monorepo boilerplate with babel 7 and typescript ",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "serverless",
+    "typescript",
+    "monorepo"
+  ],
+  "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",
+  "license": "MIT",
+  "workspaces": [
+    "src/*"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.1.5",
+    "env-var": "^3.4.1",
+    "error-to-json": "^1.1.0",
+    "http-errors": "^1.7.1",
+    "joi": "^14.0.4",
+    "joi-error-formatter": "^0.5.3",
+    "middy": "^0.19.2",
+    "source-map-support": "^0.5.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/aws-lambda": "^8.10.15",
+    "@types/clone": "^0.1.30",
+    "@types/jest": "^23.3.9",
+    "@types/joi": "^14.0.0",
+    "@types/node": "^10.12.3",
+    "@types/serverless": "^1.18.0",
+    "aws-sdk": "^2.351.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "clone": "^2.1.2",
+    "jest": "^23.6.0",
+    "serverless-iam-roles-per-function": "^1.0.4",
+    "serverless-webpack": "^5.2.0",
+    "tslint": "^5.11.0",
+    "tslint-microsoft-contrib": "^5.2.1",
+    "typescript": "^3.1.6",
+    "webpack": "^4.25.1",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

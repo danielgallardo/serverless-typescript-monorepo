@@ -1,0 +1,13 @@
+# default config will be used for all stages
+default: &default
+  projectName: sls-monorepo
+  apiGatewayName: sls-monorepo
+
+# stage specific config
+dev:
+  <<: *default
+  region: eu-west-1
+  
+prod:
+  <<: *default
+  region: us-east-1

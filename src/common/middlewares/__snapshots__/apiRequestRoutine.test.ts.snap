@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`apiRequestRoutine buildErrorResponse should build a correct response object in case of the http error 1`] = `
+Object {
+  "body": "{\\"status\\":\\"NotFoundError\\",\\"statusCode\\":404,\\"message\\":\\"Recourse not found\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 404,
+}
+`;
+
+exports[`apiRequestRoutine buildErrorResponse should build a correct response object in case of the internal error 1`] = `
+Object {
+  "body": "{\\"status\\":\\"ServiceUnavailableError\\",\\"statusCode\\":503,\\"message\\":\\"Service Unavailable\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 503,
+}
+`;
+
+exports[`apiRequestRoutine buildErrorResponse should build a correct response object in case of the validation error 1`] = `
+Object {
+  "body": "{\\"status\\":\\"UnprocessableEntityError\\",\\"statusCode\\":422,\\"message\\":\\"\\\\\\"foo\\\\\\" is required\\",\\"details\\":[{\\"message\\":\\"\\\\\\"foo\\\\\\" is required\\",\\"path\\":[\\"foo\\"],\\"type\\":\\"any.required\\",\\"context\\":{\\"key\\":\\"foo\\",\\"label\\":\\"foo\\"}}]}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 422,
+}
+`;
+
+exports[`apiRequestRoutine buildJSONResponse should build a correct response object 1`] = `
+Object {
+  "body": "{\\"foo\\":\\"bar\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 200,
+}
+`;
+
+exports[`apiRequestRoutine buildJSONResponse should build redirect response if redirectUrl is present 1`] = `
+Object {
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+    "Location": "https://example.com",
+  },
+  "statusCode": 302,
+}
+`;
+
+exports[`apiRequestRoutine should normalize event 1`] = `
+Object {
+  "body": Object {
+    "foo": "bar",
+  },
+  "headers": Object {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  },
+  "httpMethod": "POST",
+  "isBase64Encoded": false,
+  "multiValueHeaders": Object {
+    "foo": Array [
+      "bar",
+    ],
+  },
+  "multiValueQueryStringParameters": Object {
+    "foo": Array [
+      "bar",
+    ],
+  },
+  "path": "/test",
+  "pathParameters": Object {},
+  "queryStringParameters": Object {},
+  "requestContext": Object {
+    "accountId": "862946620411",
+    "apiId": "q27n90kff1",
+    "httpMethod": "POST",
+    "identity": Object {
+      "accessKey": null,
+      "accountId": null,
+      "apiKey": null,
+      "apiKeyId": null,
+      "caller": null,
+      "cognitoAuthenticationProvider": null,
+      "cognitoAuthenticationType": null,
+      "cognitoIdentityId": null,
+      "cognitoIdentityPoolId": null,
+      "sourceIp": "35.123.74.111",
+      "user": null,
+      "userAgent": "axios/0.15.2",
+      "userArn": null,
+    },
+    "path": "/dev/test",
+    "requestId": "c901f211-cc5e-11e8-b7a5-4bcd36c6e6f3",
+    "requestTimeEpoch": 1539156810614,
+    "resourceId": "una98p",
+    "resourcePath": "/test",
+    "stage": "dev",
+  },
+  "resource": "/test",
+  "stageVariables": null,
+}
+`;
+
+exports[`apiRequestRoutine should return error response if http error is thrown in handler 1`] = `
+Object {
+  "body": "{\\"status\\":\\"NotFoundError\\",\\"statusCode\\":404,\\"message\\":\\"Recourse not found\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 404,
+}
+`;
+
+exports[`apiRequestRoutine should return error response if internal error is thrown in handler 1`] = `
+Object {
+  "body": "{\\"status\\":\\"ServiceUnavailableError\\",\\"statusCode\\":503,\\"message\\":\\"Service Unavailable\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 503,
+}
+`;
+
+exports[`apiRequestRoutine should return success response 1`] = `
+Object {
+  "body": "{\\"foo\\":\\"bar\\"}",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 200,
+}
+`;
