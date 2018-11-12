@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`postEcho should return correct response 1`] = `
-Object {
-  "currentRegion": "eu-west-1",
-  "currentStage": "dev",
-  "message": "Some message",
-}
-`;

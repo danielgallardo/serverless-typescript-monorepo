@@ -22,26 +22,93 @@ provider:
       Fn::GetAtt:
         - SharedApiGateway
         - RootResourceId
-      
+
 resources:
   Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.prefix}-usersTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+    NotesTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.prefix}-notesTable
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: id
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
     SharedApiGateway:
       Type: AWS::ApiGateway::RestApi
       Properties:
-        Name: ${self:custom.config.apiGatewayName}
-        
+        Name: ${self:custom.prefix}
+
+    SharedApiGatewayResourceUsers:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        RestApiId:
+          Ref: SharedApiGateway
+        ParentId:
+          Fn::GetAtt: SharedApiGateway.RootResourceId
+        PathPart: users
+
+    SharedApiGatewayResourceUserId:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        RestApiId:
+          Ref: SharedApiGateway
+        ParentId:
+          Ref: SharedApiGatewayResourceUsers
+        PathPart: '{userId}'
+
   Outputs:
     ApiGatewayRestApiId:
+      Description: 'Shared ApiGateway Id'
       Value:
         Ref: SharedApiGateway
       Export:
-        Name: ${self:custom.config.projectName}-restApiId
-  
+        Name: ${self:custom.prefix}-restApiId
+
     ApiGatewayRestApiRootResourceId:
+      Description: 'Shared ApiGateway root resource Id'
       Value:
         Fn::GetAtt:
           - SharedApiGateway
           - RootResourceId
       Export:
-        Name: ${self:custom.config.projectName}-rootResourceId
-        
+        Name: ${self:custom.prefix}-rootResourceId
+
+    ApiGatewayRestApiResourceUsersId:
+      Description: 'Shared ApiGateway users resource Id'
+      Value:
+        Ref: SharedApiGatewayResourceUsers
+      Export:
+        Name: ${self:custom.prefix}-usersResourceId
+
+    ApiGatewayRestApiResourceUserIdId:
+      Description: 'Shared ApiGateway {userId} resource Id'
+      Value:
+        Ref: SharedApiGatewayResourceUserId
+      Export:
+        Name: ${self:custom.prefix}-userIdResourceId

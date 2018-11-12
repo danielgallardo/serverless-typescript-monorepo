@@ -1,0 +1,63 @@
+service: ${self:custom.config.projectName}-notes
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-pseudo-parameters
+  - serverless-webpack
+
+package:
+  individually: true
+
+custom:
+  config: ${file(../../config.yml):${self:provider.stage}}
+  prefix: ${self:custom.config.projectName}-${self:provider.stage}
+
+  # get notes table name from config.yml or use default
+  # that is used in root serverless.yml when table is created
+  notesTable: ${self:custom.config.notesTableName, '${self:custom.prefix}-notesTable'}
+
+  webpack:
+    webpackConfig: ../../webpack.config.js
+    includeModules: true
+    packager: yarn
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.config.region}
+
+  environment:
+    NOTES_TABLE: ${self:custom.notesTable}
+    DEBUG: true
+
+  apiGateway:
+    restApiId:
+      Fn::ImportValue: ${self:custom.prefix}-restApiId
+    restApiRootResourceId:
+      Fn::ImportValue: ${self:custom.prefix}-userIdResourceId
+
+functions:
+  createNote:
+    handler: createNote/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:PutItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.notesTable}
+    events:
+      - http:
+          path: '/notes'
+          method: post
+          cors: true
+
+  getNote:
+    handler: getNote/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.notesTable}
+    events:
+      - http:
+          path: '/notes/{noteId}'
+          method: get
+          cors: true

@@ -1,0 +1,66 @@
+service: ${self:custom.config.projectName}-users
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-pseudo-parameters
+  - serverless-webpack
+
+package:
+  individually: true
+
+custom:
+  config: ${file(../../config.yml):${self:provider.stage}}
+  prefix: ${self:custom.config.projectName}-${self:provider.stage}
+
+  # get users table name from config.yml or use default
+  # that is used in root serverless.yml when table is created
+  usersTable: ${self:custom.config.usersTableName, '${self:custom.prefix}-usersTable'}
+
+  webpack:
+    webpackConfig: ../../webpack.config.js
+    includeModules: true
+    packager: yarn
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: ${self:custom.config.region}
+
+  environment:
+    USERS_TABLE: ${self:custom.usersTable}
+    DEBUG: true
+
+  apiGateway:
+    restApiId:
+      Fn::ImportValue: ${self:custom.prefix}-restApiId
+    restApiRootResourceId:
+      Fn::ImportValue: ${self:custom.prefix}-usersResourceId
+    restApiResources:
+      '{userId}':
+        Fn::ImportValue: ${self:custom.prefix}-userIdResourceId
+
+functions:
+  createUser:
+    handler: createUser/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:PutItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+    events:
+      - http:
+          path: '/'
+          method: post
+          cors: true
+
+  getUser:
+    handler: getUser/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+    events:
+      - http:
+          path: '/{userId}'
+          method: get
+          cors: true

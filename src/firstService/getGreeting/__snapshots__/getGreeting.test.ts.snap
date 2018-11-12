@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`getGreeting should return correct greeting 1`] = `
-Object {
-  "message": "Hello John! Welcome to Serverless",
-}
-`;

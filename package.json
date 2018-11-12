@@ -19,6 +19,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "dynogels": "^9.0.0",
+    "dynogels-promisified": "^1.0.4",
     "env-var": "^3.4.1",
     "error-to-json": "^1.1.0",
     "http-errors": "^1.7.1",
@@ -48,6 +50,7 @@
     "clone": "^2.1.2",
     "jest": "^23.6.0",
     "serverless-iam-roles-per-function": "^1.0.4",
+    "serverless-pseudo-parameters": "^2.2.0",
     "serverless-webpack": "^5.2.0",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.2.1",

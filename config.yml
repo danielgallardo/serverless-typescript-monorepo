@@ -1,13 +1,16 @@
 # default config will be used for all stages
 default: &default
   projectName: sls-monorepo
-  apiGatewayName: sls-monorepo
 
 # stage specific config
 dev:
   <<: *default
   region: eu-west-1
-  
+
 prod:
   <<: *default
-  region: us-east-1
+  region: eu-west-1
+
+  # existing dynamoDB tables
+  usersTableName: sls-monorepo-dev-usersTable
+  notesTableName: sls-monorepo-dev-notesTable
