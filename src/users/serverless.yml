@@ -47,6 +47,8 @@ provider:
     restApiRootResourceId:
       # Note that we use usersResourceId as a root resource
       # this makes all paths relative to "/users"
+      # when you run "sls deploy" the output will show incorrect path
+      # as serverless is not aware of the changed root path
       Fn::ImportValue: ${self:custom.prefix}-usersResourceId
     restApiResources:
       # serverless allows only one level of nesting so we can not specify "/users/{userId} as a path here
