@@ -48,6 +48,10 @@ describe('apiRequestRoutine', () => {
     expect(buildJSONResponse({redirectUrl: 'https://example.com'})).toMatchSnapshot();
   });
 
+  it('buildJSONResponse should build custom response if statusCode is present', () => {
+    expect(buildJSONResponse({statusCode: 204})).toMatchSnapshot();
+  });
+
   it('buildErrorResponse should build a correct response object in case of the internal error', () => {
     expect(buildErrorResponse(new Error('Some internal error'))).toMatchSnapshot();
   });

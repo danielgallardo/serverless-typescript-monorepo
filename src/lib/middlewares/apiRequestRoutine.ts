@@ -56,7 +56,18 @@ type Response = {
  */
 export const buildJSONResponse = (response: Response): Response => {
   if (!response) return response;
-  if (response.statusCode) return response;
+
+  // return response directly if it contains statusCode
+  if (response.statusCode)
+    return {
+      ...response,
+      headers: {
+        ...DEFAULT_HEADERS,
+        ...response.headers
+      }
+    };
+
+  // return redirect response if redirectUrl is defined
   if (response.redirectUrl)
     return {
       statusCode: 302,
@@ -65,6 +76,7 @@ export const buildJSONResponse = (response: Response): Response => {
         Location: response.redirectUrl
       }
     };
+
   return {
     statusCode: 200,
     body: JSON.stringify(response),
