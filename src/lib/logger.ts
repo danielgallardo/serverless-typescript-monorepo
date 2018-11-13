@@ -4,6 +4,11 @@ export const logInfo = (comment: string, data?: object): void => {
   console.log(`${comment}:`, JSON.stringify(data, null, 2));
 };
 
+/**
+ * Logs data when env "DEBUG" is set to true
+ * @param comment
+ * @param data
+ */
 export const logDebugInfo = (comment: string, data?: object): void => {
   if (process.env.DEBUG === 'true') {
     logInfo(comment, data);
@@ -11,7 +16,7 @@ export const logDebugInfo = (comment: string, data?: object): void => {
 };
 
 /**
- * use this function to debug variables like
+ * Use this function to debug variables like
  * `logDebugVar({currentUser})` will output
  * `currentUser: {...}`
  * @param data - a variable wrapped in an object like {currentUser}
@@ -35,6 +40,10 @@ export const errorToJSON = (error: Error) => {
   return jsonError;
 };
 
+/**
+ * Logs a formatted error that is readable in CloudWatch
+ * @param error
+ */
 export const logError = (error: Error = new Error('empty error')): void => {
   // we don't want to log errors when we're testing, it pollutes test outputs
   if (process.env.NODE_ENV === 'test') return;

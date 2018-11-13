@@ -12,6 +12,10 @@ const DEFAULT_HEADERS = {
   'Access-Control-Allow-Credentials': true // Required for cookies, authorization headers with HTTPS
 };
 
+/**
+ * Checks if body is a valid JSON and converts it to object
+ * @param event
+ */
 export const parseJSONBody = (event: APIGatewayProxyEvent): void => {
   if (!event.headers || !event.body) return;
   const contentType = event.headers['Content-Type'] || event.headers['content-type'];
@@ -21,12 +25,18 @@ export const parseJSONBody = (event: APIGatewayProxyEvent): void => {
       try {
         event.body = JSON.parse(event.body);
       } catch (err) {
-        throw new UnprocessableEntity('Content type defined as JSON but an invalid JSON was provided');
+        throw new UnprocessableEntity(
+          'Content type defined as JSON but an invalid JSON was provided'
+        );
       }
     }
   }
 };
 
+/**
+ * Sets queryStringParameters and pathParameters to {} by default
+ * @param event
+ */
 export const setDefaultParams = (event: APIGatewayProxyEvent): void => {
   if (event.hasOwnProperty('httpMethod')) {
     event.queryStringParameters = event.queryStringParameters || {};
@@ -39,6 +49,11 @@ type Response = {
   [key: string]: any;
 };
 
+/**
+ * Builds a valid ApiGateway response based on returned value
+ * redirects if response contains redirectUrl
+ * @param response
+ */
 export const buildJSONResponse = (response: Response): Response => {
   if (!response) return response;
   if (response.statusCode) return response;
@@ -57,6 +72,11 @@ export const buildJSONResponse = (response: Response): Response => {
   };
 };
 
+/**
+ * Creates a public ServiceUnavailable error
+ * provides original error details if env "DEBUG" is set to true
+ * @param error
+ */
 const getServiceUnavailableError = (error: Error) => {
   const httpError = new ServiceUnavailable();
   if (process.env.DEBUG === 'true') {
@@ -65,6 +85,10 @@ const getServiceUnavailableError = (error: Error) => {
   return httpError;
 };
 
+/**
+ * Gets public error based on error type
+ * @param error
+ */
 const getPublicError = (error: Error) => {
   if (error instanceof HttpError) return error;
   if (error instanceof JoiError) {
@@ -78,6 +102,10 @@ const getPublicError = (error: Error) => {
   return getServiceUnavailableError(error);
 };
 
+/**
+ * Builds a valid ApiGateway error response based on error
+ * @param error
+ */
 export const buildErrorResponse = (error: Error): Response => {
   let httpError = getPublicError(error);
   return {
@@ -92,6 +120,9 @@ export const buildErrorResponse = (error: Error): Response => {
   };
 };
 
+/**
+ * A middleware that includes useful logic for ApiGateway handlers
+ */
 export const apiRequestRoutine = () => ({
   before(handler: IHandlerLambda, next: IMiddyNextFunction) {
     parseJSONBody(handler.event);

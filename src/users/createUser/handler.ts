@@ -6,6 +6,13 @@ import {NormalizedEvent} from '../../@types';
 import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {createUser} from './createUser';
 
+// As a convention handler should not contain any business logic
+// it only uses middlewares for common logic like event validation, error handing etc.
+// we use middy middleware engine for that purpose
+
+// Pass params to your action explicitly so this action can be reused with other handler
+// like AppSync resolver for example
+
 const schema = {
   body: Joi.object()
     .keys({
@@ -21,6 +28,8 @@ const schema = {
 };
 
 const handler = async (event: NormalizedEvent) => {
+  // event.body will be an object parsed by apiRequestRoutine
+  // and it will contain props that match the schema provided to eventValidator
   return createUser(event.body);
 };
 
