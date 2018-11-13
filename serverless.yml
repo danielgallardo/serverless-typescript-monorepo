@@ -12,7 +12,7 @@ provider:
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
   region: ${self:custom.config.region}
-  
+
   # define a shared api gateway instance
   # every service will use one root api url
   apiGateway:
@@ -82,15 +82,6 @@ resources:
           Ref: SharedApiGatewayResourceUsers
         PathPart: '{userId}'
 
-    SharedApiGatewayResourceListUsers:
-      Type: AWS::ApiGateway::Resource
-      Properties:
-        RestApiId:
-          Ref: SharedApiGateway
-        ParentId:
-          Ref: SharedApiGatewayResourceUsers
-        PathPart: list       
-
   Outputs:
     ApiGatewayRestApiId:
       Description: 'Shared ApiGateway Id'
@@ -121,10 +112,3 @@ resources:
         Ref: SharedApiGatewayResourceUserId
       Export:
         Name: ${self:custom.prefix}-userIdResourceId
-
-    ApiGatewayRestApiResourceListUsersId:
-      Description: 'Shared ApiGateway listUsers resource Id'
-      Value:
-        Ref: SharedApiGatewayResourceListUsers
-      Export:
-        Name: ${self:custom.prefix}-listUserResourceId        
