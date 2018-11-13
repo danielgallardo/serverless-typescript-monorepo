@@ -1,5 +1,5 @@
 # serverless-typescript-monorepo
-Serverless starter project with babel 7 typescript and yarn workspaces
+Serverless starter project with typescript and yarn workspaces
 
 This starter project is designed to get you up and running with [serverless](https://serverless.com/) project 
 that contains multiple services under the same shared API Gateway endpoint.
