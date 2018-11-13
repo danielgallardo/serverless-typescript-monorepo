@@ -39,6 +39,8 @@ provider:
     restApiResources:
       '{userId}':
         Fn::ImportValue: ${self:custom.prefix}-userIdResourceId
+      'list':
+        Fn::ImportValue: ${self:custom.prefix}-listUsersResourceId
 
 functions:
   createUser:
@@ -76,3 +78,16 @@ functions:
           path: '/{userId}'
           method: get
           cors: true
+
+  listUsers:
+    handler: listUsers/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+    events:
+      - http:
+          path: '/list'
+          method: get
+          cors: true
+          
