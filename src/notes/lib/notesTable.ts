@@ -3,7 +3,7 @@ import {getEnv, Joi} from '../../lib/validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
-export const NotesTable = dynogels.define('Note', {
+export const NotesTable = dynogels.define('NotesTable', {
   tableName: getEnv('NOTES_TABLE'),
   hashKey: 'userId',
   rangeKey: 'id',
