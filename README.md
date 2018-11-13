@@ -4,8 +4,9 @@ Serverless starter project with babel 7 typescript and yarn workspaces
 This starter project is designed to get you up and running with [serverless](https://serverless.com/) project 
 that contains multiple services under the same shared API Gateway endpoint.
 
-It uses `webpack` `babel 7` and `@babel/preset-typescript` for typescript support.   
-You'll have `jest` tests out of the box
+It uses `webpack` `babel 7` and `@babel/preset-typescript` for typescript support.
+
+You'll have `jest` tests out of the box.
 
 ## Reasons
 In a big project at some point it is nessesery to split logic into multiple stacks and deploy as separate services.  
