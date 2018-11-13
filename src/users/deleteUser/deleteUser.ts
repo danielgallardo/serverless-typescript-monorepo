@@ -1,10 +1,12 @@
 import {UsersTable} from '../lib/usersTable';
 
 type Params = {
-  id: string
+  userId: string;
 };
 
-export const deleteUser = async (data: Params) => {
-  const user = await UsersTable.destroyAsync(data);
-  return user.toJSON();
+export const deleteUser = async ({userId}: Params) => {
+  await UsersTable.destroyAsync(userId);
+  return {
+    success: true
+  }
 };

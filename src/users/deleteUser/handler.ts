@@ -6,19 +6,20 @@ import {deleteUser} from './deleteUser';
 import {NormalizedEvent} from '../../@types';
 import {eventValidator} from '../../lib/middlewares/eventValidator';
 
+interface Event extends NormalizedEvent {
+  pathParameters: {
+    userId: string;
+  };
+}
+
 const schema = {
-  body: Joi.object()
-    .keys({
-      id: Joi.string().required()
-    })
-    // if you pass this option validator will throw an error if any unknown key is passed
-    // otherwise it will silently remove all unknown keys
-    // read more about options: https://github.com/hapijs/joi/blob/v14.0.1/API.md#validatevalue-schema-options-callback
-    .options({stripUnknown: false})
+  pathParameters: Joi.object().keys({
+    userId: Joi.param()
+  })
 };
 
-const handler = async (event: NormalizedEvent) => {
-  return deleteUser(event.body);
+const handler = async (event: Event) => {
+  return deleteUser({userId: event.pathParameters.userId});
 };
 
 export default middy(handler)
