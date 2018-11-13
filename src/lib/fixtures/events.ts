@@ -1,5 +1,5 @@
-import {APIGatewayProxyEvent} from "aws-lambda";
-import {NormalizedEvent} from "../../@types";
+import {APIGatewayProxyEvent} from 'aws-lambda';
+import {NormalizedEvent} from '../../@types';
 
 export const event: APIGatewayProxyEvent = {
   resource: '/test',

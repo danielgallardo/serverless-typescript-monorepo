@@ -1,6 +1,6 @@
 import {APIGatewayProxyEvent} from 'aws-lambda';
-import {NormalizedEvent} from "../../@types";
-import {event} from "../fixtures/events";
+import {NormalizedEvent} from '../../@types';
+import {event} from '../fixtures/events';
 import {Joi} from '../validation';
 import {
   apiRequestRoutine,

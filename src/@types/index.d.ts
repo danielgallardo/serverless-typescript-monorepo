@@ -1,4 +1,4 @@
-import { APIGatewayEventRequestContext } from "aws-lambda";
+import {APIGatewayEventRequestContext} from 'aws-lambda';
 
 export interface NormalizedEvent {
   headers: {
