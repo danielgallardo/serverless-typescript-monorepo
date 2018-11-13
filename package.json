@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
+    "bunyan": "^1.8.12",
     "dynogels": "^9.0.0",
     "dynogels-promisified": "^1.0.4",
     "env-var": "^3.4.1",
@@ -40,6 +41,7 @@
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-typescript": "^7.1.0",
     "@types/aws-lambda": "^8.10.15",
+    "@types/bunyan": "^1.8.5",
     "@types/clone": "^0.1.30",
     "@types/jest": "^23.3.9",
     "@types/joi": "^14.0.0",

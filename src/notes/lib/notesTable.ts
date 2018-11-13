@@ -1,3 +1,4 @@
+import bunyan from 'bunyan';
 import dynogels from 'dynogels-promisified';
 import {getEnv, Joi} from '../../lib/validation';
 
@@ -13,5 +14,6 @@ export const NotesTable = dynogels.define('NotesTable', {
     userId: Joi.string(),
     title: Joi.string(),
     body: Joi.string()
-  }
+  },
+  log: bunyan.createLogger({name: 'UsersTable'})
 });

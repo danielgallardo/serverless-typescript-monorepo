@@ -1,18 +1,19 @@
 import toJSON from 'error-to-json';
 
-export const logInfo = (comment: string, data?: object): void => {
-  console.log(`${comment}:`, JSON.stringify(data, null, 2));
+export const logInfo = (...args: any[]): void => {
+  const info = args.map(arg => {
+    if (typeof arg === 'object') return JSON.stringify(arg, null, 2);
+    return arg;
+  });
+  console.log(...info);
 };
 
 /**
  * Logs data when env "DEBUG" is set to true
- * @param comment
- * @param data
+ * @param args
  */
-export const logDebugInfo = (comment: string, data?: object): void => {
-  if (process.env.DEBUG === 'true') {
-    logInfo(comment, data);
-  }
+export const logDebugInfo = (...args: any[]): void => {
+  if (process.env.DEBUG === 'true') logInfo(...args);
 };
 
 /**
@@ -47,5 +48,5 @@ export const errorToJSON = (error: Error) => {
 export const logError = (error: Error = new Error('empty error')): void => {
   // we don't want to log errors when we're testing, it pollutes test outputs
   if (process.env.NODE_ENV === 'test') return;
-  console.log('== ERROR ==', JSON.stringify(errorToJSON(error), null, 2));
+  logInfo('== ERROR ==', errorToJSON(error), null, 2);
 };

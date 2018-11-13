@@ -1,5 +1,6 @@
 import dynogels from 'dynogels-promisified';
 import {getEnv, Joi} from '../../lib/validation';
+import bunyan from 'bunyan';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
@@ -20,5 +21,7 @@ export const UsersTable = dynogels.define('UsersTable', {
     id: dynogels.types.uuid(),
     name: Joi.string(),
     email: Joi.string().email()
-  }
+  },
+
+  log: bunyan.createLogger({name: 'UsersTable'})
 });
