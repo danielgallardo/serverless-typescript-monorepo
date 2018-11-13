@@ -15,5 +15,5 @@ export const NotesTable = dynogels.define('NotesTable', {
     title: Joi.string(),
     body: Joi.string()
   },
-  log: bunyan.createLogger({name: 'UsersTable'})
+  log: bunyan.createLogger({name: 'NotesTable'})
 });
