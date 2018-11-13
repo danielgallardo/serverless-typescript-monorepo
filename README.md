@@ -9,20 +9,20 @@ It uses `webpack` `babel 7` and `@babel/preset-typescript` for typescript suppor
 You'll have `jest` tests out of the box.
 
 ## Reasons
-In a big project at some point it is nessesery to split logic into multiple stacks and deploy as separate services.  
-It gives further separation of concerns and allows to update individual stacks separatly.   
+In a big project at some point, it is necessary to split logic into multiple stacks and deploy as separate services.  
+It gives further separation of concerns and allows to update individual stacks separately.   
 
 This project has a [main service](serverless.yml) that holds only shared resources that can be reused across the services
 like dynamoDB tables and APIGateway resources and functional services, like [users](src/users/serverless.yml),
 
 
-that hold business logic. This approach not only allows to easely add and remove individual services but also
-reuse existing resources for stages. It is very usefull if you have existing dynamoDB tables in production.
+that hold business logic. This approach not only allows to easily add and remove individual services but also
+reuse existing resources for stages. It is very useful if you have existing dynamoDB tables in production.
 
 ## Configuration
 Change [config.yml](config.yml) to reflect your configurations
 
-#### 1. Install serverless framework
+#### 1. Install the serverless framework
 `yarn global add serverless`
 
 #### 2. Install dependencies
@@ -45,17 +45,17 @@ Stream all logs for a specific Function from CloudWatch
  - `cd src/<SERVICE>`
  - `sls logs -t -s <DEV/PROD> -r <REGION> --aws-profile=<AWS_PROFILE> -f <FUNCTION_NAME>`
  
-## Folder stucture
+## Folder structure
 
-Each lambda function has a dedicated folder inside the service with a descriptive name and uses key words for 
+Each lambda function has a dedicated folder inside the service with a descriptive name and uses keywords for 
 CRUD endpoints like `create`, `update`, `get`, `list`, `delete`, for example [createUser](src/users/createUser)
  
 Each folder contains a [handler.ts](src/users/createUser). As a convention handler should not contain any business logic, 
-it only uses middlewares for common logic like event validation, error handing etc. 
+it only uses middlewares for common logic like event validation, error handling etc. 
 We use [middy](https://github.com/middyjs/middy) middleware engine for that purpose.
 
 Add your business logic goes to the file with the same name as a folder like 
-[createUser.ts](src/users/createUser/createUser.ts). This provides a better autocompition for ides.
+[createUser.ts](src/users/createUser/createUser.ts). This provides a better autocompletion for ides.
 
 ## Custom middlewares
 
@@ -86,5 +86,3 @@ It is also easier to change mapping in the future in case if you want to use the
 middleware to validate them. Your handler will look like [src/notes/createNote/handler.ts](src/notes/createNote/handler.ts)
 
 - Add env variables using [getEnv](src/lib/validation.ts). This will ensure that variable is defined
-
-
