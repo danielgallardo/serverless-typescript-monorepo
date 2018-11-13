@@ -11,8 +11,8 @@
     "serverless",
     "aws",
     "typescript",
-    "babel 7",
-    "yarn workspaces",
+    "babel7",
+    "workspaces",
     "monorepo"
   ],
   "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",

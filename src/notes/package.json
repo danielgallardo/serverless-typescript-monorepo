@@ -1,8 +1,8 @@
 {
-  "name": "second-service",
+  "name": "@serverless-typescript-monorepo/notes",
   "version": "1.0.0",
   "scripts": {
-    "test": "cd .. && yarn test --testPathPattern src/secondService"
+    "test": "cd .. && yarn test --testPathPattern src/notes"
   },
   "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",
   "license": "MIT",
