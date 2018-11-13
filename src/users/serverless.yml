@@ -78,6 +78,8 @@ functions:
 
   deleteUser:
     handler: deleteUser/handler.default
+    environment:
+      USERS_TABLE: ${self:custom.usersTable}
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:DeleteItem

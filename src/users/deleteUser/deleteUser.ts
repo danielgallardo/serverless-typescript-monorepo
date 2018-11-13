@@ -7,6 +7,6 @@ type Params = {
 export const deleteUser = async ({userId}: Params) => {
   await UsersTable.destroyAsync(userId);
   return {
-    success: true
+    statusCode: 204
   }
 };
