@@ -43,7 +43,7 @@ In the root folder run `sls deploy -s <DEV/PROD> --aws-profile=<AWS_PROFILE>`
 Stream all logs for a specific Function from CloudWatch 
 
  - `cd src/<SERVICE>`
- - `sls logs -t -s <DEV/PROD> -r <REGION> --aws-profile=<AWS_PROFILE> -f <FUNCTION_NAME>`
+ - `sls logs -t -s <DEV/PROD> --aws-profile=<AWS_PROFILE> -f <FUNCTION_NAME>`
  
 ## Folder structure
 
