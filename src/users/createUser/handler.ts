@@ -2,9 +2,9 @@ import middy from 'middy';
 import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
-import {createUser} from './createUser';
 import {NormalizedEvent} from '../../@types';
 import {eventValidator} from '../../lib/middlewares/eventValidator';
+import {createUser} from './createUser';
 
 const schema = {
   body: Joi.object()

@@ -1,21 +1,29 @@
+# This is a users service
+# the name of the service is scoped to the project
 service: ${self:custom.config.projectName}-users
 
 plugins:
-  - serverless-iam-roles-per-function
-  - serverless-pseudo-parameters
+  - serverless-iam-roles-per-function # required for iamRoleStatements per function
+  - serverless-pseudo-parameters # required for #{AWS::Region}:#{AWS::AccountId} syntax to work
   - serverless-webpack
 
 package:
+  # we want to package each function individually
   individually: true
 
 custom:
+  # we're loading config file and importing current stage variables
   config: ${file(../../config.yml):${self:provider.stage}}
+
+  # A global prefix that is used to scope resource names
   prefix: ${self:custom.config.projectName}-${self:provider.stage}
 
   # get users table name from config.yml or use default
   # that is used in root serverless.yml when table is created
   usersTable: ${self:custom.config.usersTableName, '${self:custom.prefix}-usersTable'}
 
+  # webpack config
+  # read more - https://github.com/serverless-heaven/serverless-webpack
   webpack:
     webpackConfig: ../../webpack.config.js
     includeModules: true
@@ -27,34 +35,51 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${self:custom.config.region}
 
+  # global env variables for all functions
   environment:
-    USERS_TABLE: ${self:custom.usersTable}
     DEBUG: true
 
+  # We tell serverless to use our custom ApiGateway instance instead of creating it automatically
+  # "Fn::ImportValue" CloudFormation function is used to import values from main resources stack
   apiGateway:
     restApiId:
       Fn::ImportValue: ${self:custom.prefix}-restApiId
     restApiRootResourceId:
+      # Note that we use usersResourceId as a root resource
+      # this makes all paths relative to "/users"
       Fn::ImportValue: ${self:custom.prefix}-usersResourceId
     restApiResources:
+      # serverless allows only one level of nesting so we can not specify "/users/{userId} as a path here
       '{userId}':
         Fn::ImportValue: ${self:custom.prefix}-userIdResourceId
 
+# As a convention we name CRUD functions starting with key words
+# create, update, get, list, delete
 functions:
   createUser:
     handler: createUser/handler.default
+
+    # In general it is better to set env variables per function
+    environment:
+      USERS_TABLE: ${self:custom.usersTable}
+
+    # In general it is better to specify IAM roles for each function
+    # to allow only required actions
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
         Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
     events:
       - http:
+          # Note that the path is relative to "/users"
           path: '/'
           method: post
           cors: true
 
   getUser:
     handler: getUser/handler.default
+    environment:
+      USERS_TABLE: ${self:custom.usersTable}
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:GetItem

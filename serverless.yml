@@ -1,10 +1,12 @@
-# The root service is only used to deploy shared resources
-# like dynamoDB tables, IAM roles etc.
+# The root service is only used to deploy shared resources like dynamoDB tables, IAM roles etc.
+# This approach allows to isolate business logic of services from data sources and common resources
 
 service: ${self:custom.config.projectName}
 
 custom:
   config: ${file(./config.yml):${self:provider.stage}}
+
+  # A global prefix that is used to scope resource names
   prefix: ${self:custom.config.projectName}-${self:provider.stage}
 
 provider:
@@ -12,23 +14,16 @@ provider:
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
   region: ${self:custom.config.region}
-  
-  # define a shared api gateway instance
-  # every service will use one root api url
-  apiGateway:
-    restApiId:
-      Ref: SharedApiGateway
-    restApiResources:
-      Fn::GetAtt:
-        - SharedApiGateway
-        - RootResourceId
 
+# This service should not contain function
+# it is used only for deploying resources
 resources:
   Resources:
     UsersTable:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
+        # This table name will be used in users service to access dynamoDB table
         TableName: ${self:custom.prefix}-usersTable
         AttributeDefinitions:
           - AttributeName: id
@@ -44,12 +39,15 @@ resources:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
+        # This table name will be used in notes service to access dynamoDB table
         TableName: ${self:custom.prefix}-notesTable
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
           - AttributeName: id
             AttributeType: S
+
+        # note item belongs to user so it should have userId as a hash key
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
@@ -59,11 +57,18 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
+    # An custom instance of ApiGateway that will be shared across all services
+    # this allows to have multiple services under one api endpoint
     SharedApiGateway:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: ${self:custom.prefix}
 
+    # If any part of the api path is reused in multiple services
+    # it should be manually created here
+    # We would like to have users services that uses "/users" and "/users/{userId}" paths
+    # and notes service that uses "/users/{userId}/notes" and "/users/{userId}/notes/{noteId}"
+    # so we need to create custom resources for the shared "users" and "{userId}" parts
     SharedApiGatewayResourceUsers:
       Type: AWS::ApiGateway::Resource
       Properties:
@@ -71,7 +76,7 @@ resources:
           Ref: SharedApiGateway
         ParentId:
           Fn::GetAtt: SharedApiGateway.RootResourceId
-        PathPart: users
+        PathPart: 'users'
 
     SharedApiGatewayResourceUserId:
       Type: AWS::ApiGateway::Resource
@@ -79,15 +84,19 @@ resources:
         RestApiId:
           Ref: SharedApiGateway
         ParentId:
+          # note that we specify SharedApiGatewayResourceUsers as a parent
+          # so this path becomes /users/{userId}
           Ref: SharedApiGatewayResourceUsers
         PathPart: '{userId}'
 
   Outputs:
+    # Exports for custom ApiGateway resources, so they can be reused across the services
     ApiGatewayRestApiId:
       Description: 'Shared ApiGateway Id'
       Value:
         Ref: SharedApiGateway
       Export:
+        # This name will be used to import a resource
         Name: ${self:custom.prefix}-restApiId
 
     ApiGatewayRestApiRootResourceId:

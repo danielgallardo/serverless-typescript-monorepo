@@ -61,3 +61,4 @@ functions:
           path: '/notes/{noteId}'
           method: get
           cors: true
+

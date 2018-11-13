@@ -2,7 +2,7 @@ import {NotesTable} from '../lib/notesTable';
 
 type Params = {
   userId: string;
-  noteId: string
+  noteId: string;
 };
 
 export const getNote = async ({userId, noteId}: Params) => {
