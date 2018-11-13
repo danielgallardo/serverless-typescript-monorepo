@@ -54,11 +54,35 @@ We use [middy](https://github.com/middyjs/middy) middleware engine for that purp
 
 Add your business logic goes to the file with the same name as a folder like 
 [createUser.ts](src/users/createUser/createUser.ts). This provides a better autocompition for ides.
- 
+
+## Custom middlewares
+
+### [apiRequestRoutine](src/lib/middlewares/apiRequestRoutine.ts)
+
+- parses JSON body if present
+- sets default empty objects for `queryStringParameters` and `pathParameters`
+- builds JSON response (you just need to return an object from your handler)
+- builds Error response (if there is an error in your handler it will return ServiceUnavailable error to the user)    
+if you want to return different http error use [http-errors](https://www.npmjs.com/package/http-errors) and throw it in the handler.
+
+### [logRoutine](src/lib/middlewares/logRoutine.ts)
+
+- logs event and response for each listCustomers if `process.env.DEBUG === 'true'`
+- logs all errors that occur in listCustomers, check CloudWatch to see the errors
+
+### [eventValidator](src/lib/middlewares/eventValidator.ts)
+
+- validates event object with Joi schema
+- it will remove all unknown keys by default
+
 ## Recommendations
 
-Explicitly pass all required parameters to your function from the event so it is clear what parameters are used. 
+- Explicitly pass all required parameters to your function from the event so it is clear what parameters are used. 
 It is also easier to change mapping in the future in case if you want to use the same function as an AppSync resolver.
 
-If you have incoming body, pathParameters or queryParameters - use [eventValidator](src/common/middlewares/eventValidator.ts) 
-middleware to validate them. Your handler will look like [this](src/notes/createNote/handler.ts)
+- If you have incoming `body`, `pathParameters` or `queryStringParameters` - use [eventValidator](src/common/middlewares/eventValidator.ts) 
+middleware to validate them. Your handler will look like [src/notes/createNote/handler.ts](src/notes/createNote/handler.ts)
+
+- Add env variables using [getEnv](src/lib/validation.ts). This will ensure that variable is defined
+
+
