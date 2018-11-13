@@ -6,6 +6,11 @@ const defaultOptions = {
   stripUnknown: true
 };
 
+/**
+ * Validates event based on Joi schema
+ * @param schema
+ * @param options
+ */
 export const eventValidator = (schema: SchemaLike, options?: ValidationOptions) => ({
   before(handler: IHandlerLambda, next: IMiddyNextFunction) {
     const _options = Object.assign({}, defaultOptions, options);

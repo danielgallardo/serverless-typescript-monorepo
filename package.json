@@ -5,11 +5,14 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch"
   },
   "keywords": [
     "serverless",
+    "aws",
     "typescript",
+    "babel 7",
+    "yarn workspaces",
     "monorepo"
   ],
   "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",

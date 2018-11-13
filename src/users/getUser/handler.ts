@@ -7,6 +7,7 @@ import {NormalizedEvent} from '../../@types';
 import {eventValidator} from '../../lib/middlewares/eventValidator';
 
 interface Event extends NormalizedEvent {
+  // path parameter matches {userId} part of the url
   pathParameters: {
     userId: string;
   };
@@ -14,6 +15,8 @@ interface Event extends NormalizedEvent {
 
 const schema = {
   pathParameters: Joi.object().keys({
+    // this is a custom Joi method that insure that param is not undefined or null as a string
+    // it returns an error if "/users/undefined" is called
     userId: Joi.param()
   })
 };

@@ -7,6 +7,9 @@ export type JoiErrorOptions = {
   internal?: boolean;
 };
 
+/**
+ * Custom Joi error to simplify CloudWatch logging
+ */
 export class JoiError extends Error {
   isJoi: boolean;
   internal: boolean;

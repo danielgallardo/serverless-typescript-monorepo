@@ -28,18 +28,21 @@ provider:
   region: ${self:custom.config.region}
 
   environment:
-    NOTES_TABLE: ${self:custom.notesTable}
     DEBUG: true
 
   apiGateway:
     restApiId:
       Fn::ImportValue: ${self:custom.prefix}-restApiId
     restApiRootResourceId:
+      # Note that we use userIdResourceId as a root resource
+      # this makes all paths relative to "/users/{userId}"
       Fn::ImportValue: ${self:custom.prefix}-userIdResourceId
 
 functions:
   createNote:
     handler: createNote/handler.default
+    environment:
+      NOTES_TABLE: ${self:custom.notesTable}
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:PutItem
@@ -52,6 +55,8 @@ functions:
 
   getNote:
     handler: getNote/handler.default
+    environment:
+      NOTES_TABLE: ${self:custom.notesTable}
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:GetItem

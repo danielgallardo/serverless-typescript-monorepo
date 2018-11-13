@@ -31,6 +31,8 @@ module.exports = {
         loader: 'babel-loader',
         include: __dirname,
         options: {
+          // babel config should be inlined so webpack.config.js can be reused inside services
+          // otherwise it will not find babel.config.js
           cacheDirectory: true,
           plugins: [
             '@babel/plugin-transform-runtime',

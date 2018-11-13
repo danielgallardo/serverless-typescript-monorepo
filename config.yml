@@ -1,8 +1,12 @@
+# This is a global configuration file for the entire project
+# Use it to specify your env variables and configurations
+
 # default config will be used for all stages
 default: &default
   projectName: sls-monorepo
 
 # stage specific config
+# the key should match a serverless stage
 dev:
   <<: *default
   region: eu-west-1
@@ -11,6 +15,8 @@ prod:
   <<: *default
   region: eu-west-1
 
-  # existing dynamoDB tables
+  # Existing dynamoDB tables
+  # in case you already have tables in production with existing date
+  # you can skip deployment of the root service that creates tables and specify table names here
   usersTableName: sls-monorepo-dev-usersTable
   notesTableName: sls-monorepo-dev-notesTable
