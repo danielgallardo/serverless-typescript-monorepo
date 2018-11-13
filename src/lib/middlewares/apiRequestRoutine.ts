@@ -54,8 +54,13 @@ type Response = {
  * redirects if response contains redirectUrl
  * @param response
  */
-export const buildJSONResponse = (response: Response): Response => {
-  if (!response) return response;
+export const buildJSONResponse = (response?: Response): Response => {
+  // return No Content response if there is no content
+  if (!response)
+    return {
+      statusCode: 204,
+      headers: DEFAULT_HEADERS
+    };
 
   // return response directly if it contains statusCode
   if (response.statusCode)

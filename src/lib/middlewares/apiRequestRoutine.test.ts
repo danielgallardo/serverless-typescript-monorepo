@@ -49,7 +49,11 @@ describe('apiRequestRoutine', () => {
   });
 
   it('buildJSONResponse should build custom response if statusCode is present', () => {
-    expect(buildJSONResponse({statusCode: 204})).toMatchSnapshot();
+    expect(buildJSONResponse({statusCode: 200, body: 'custom body'})).toMatchSnapshot();
+  });
+
+  it('buildJSONResponse should build no content if response is empty', () => {
+    expect(buildJSONResponse(undefined)).toMatchSnapshot();
   });
 
   it('buildErrorResponse should build a correct response object in case of the internal error', () => {
