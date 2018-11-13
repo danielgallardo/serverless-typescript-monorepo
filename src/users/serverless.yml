@@ -53,6 +53,18 @@ functions:
           method: post
           cors: true
 
+  deleteUser:
+    handler: deleteUser/handler.default
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+    events:
+      - http:
+          path: '/'
+          method: delete
+          cors: true
+
   getUser:
     handler: getUser/handler.default
     iamRoleStatements:
