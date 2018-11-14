@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "test": "jest --watch",
-    "lint": "tslint -t stylish --project tsconfig.json --fix 'src/**/*.ts'",
+    "lint": "tslint -t stylish -p tsconfig.json --fix 'src/**/*.ts'",
     "precommit": "lint-staged",
     "postcommit": "git update-index --again"
   },
@@ -30,7 +30,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "tslint --project tsconfig.json --fix",
+      "tslint -t stylish -p tsconfig.json --fix",
       "git add"
     ]
   },
