@@ -8,6 +8,5 @@ type Params = {
 // Use named export, it improves autocompletion
 export const createUser = async (data: Params) => {
   // Check dynogels and dynogels-promisified for mor info about Table methods
-  const user = await usersTable.createAsync(data);
-  return user.toJSON();
+  return usersTable.createAsync(data);
 };

@@ -6,6 +6,5 @@ type Params = {
 };
 
 export const getNote = async ({userId, noteId}: Params) => {
-  const note = await notesTable.getAsync(userId, noteId);
-  return note.toJSON();
+  return notesTable.getAsync(userId, noteId);
 };
