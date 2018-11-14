@@ -1,9 +1,9 @@
-import {notesTable} from '../lib/notesTable';
+import {NoteModel} from '../lib/NoteModel';
 
 type Params = {
   userId: string;
 };
 
 export const listNotes = async ({userId}: Params) => {
-  return notesTable.query(userId).loadAll().execAsync();
+  return NoteModel.query(userId).loadAll().execAsync();
 };

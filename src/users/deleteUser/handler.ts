@@ -1,12 +1,12 @@
 import middy from 'middy';
-import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
-import {logRoutine} from '../../lib/middlewares/logRoutine';
-import {Joi} from '../../lib/validation';
-import {deleteUser} from './deleteUser';
-import {NormalizedEvent} from '../../@types';
-import {eventValidator} from '../../lib/middlewares/eventValidator';
+import { INormalizedEvent } from '../../@types';
+import { apiRequestRoutine } from '../../lib/middlewares/apiRequestRoutine';
+import { eventValidator } from '../../lib/middlewares/eventValidator';
+import { logRoutine } from '../../lib/middlewares/logRoutine';
+import { Joi } from '../../lib/validation';
+import { deleteUser } from './deleteUser';
 
-interface Event extends NormalizedEvent {
+interface IEvent extends INormalizedEvent {
   pathParameters: {
     userId: string;
   };
@@ -18,7 +18,7 @@ const schema = {
   })
 };
 
-const handler = async (event: Event) => {
+const handler = async (event: IEvent) => {
   return deleteUser({userId: event.pathParameters.userId});
 };
 

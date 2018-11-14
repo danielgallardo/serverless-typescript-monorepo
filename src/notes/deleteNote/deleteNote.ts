@@ -1,4 +1,4 @@
-import {NotesTable} from '../lib/notesTable';
+import {NoteModel} from '../lib/NoteModel';
 
 type Params = {
   userId: string;
@@ -6,7 +6,7 @@ type Params = {
 };
 
 export const deleteNote = async ({userId, noteId}: Params) => {
-  await NotesTable.destroyAsync(userId, noteId);
+  await NoteModel.destroyAsync(userId, noteId);
   return {
     statusCode: 204
   }
