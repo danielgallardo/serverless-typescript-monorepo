@@ -1,6 +1,5 @@
-import {UsersTable} from '../lib/usersTable';
+import {usersTable} from '../lib/usersTable';
 
 export const listUsers = async () => {
-  const users = await UsersTable.scan().execAsync();
-  return users;
+  return usersTable.scan().execAsync();
 };
