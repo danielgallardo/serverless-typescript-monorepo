@@ -80,3 +80,17 @@ functions:
           path: '/notes/{noteId}'
           method: delete
           cors: true
+
+  listNotes:
+    handler: listNotes/handler.default
+    environment:
+      NOTES_TABLE: ${self:custom.notesTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:Query
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.notesTable}
+    events:
+      - http:
+          path: '/notes'
+          method: get
+          cors: true
