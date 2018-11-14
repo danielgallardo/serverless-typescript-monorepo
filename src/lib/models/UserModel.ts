@@ -4,6 +4,8 @@ import {getEnv, Joi} from '../validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
+// name your model as a single item, this name will be used in helper methods
+// to provide better errors
 // tslint:disable-next-line:variable-name
 export const UserModel = dynogels.define('user', {
   // Table name can be configured after initialization like this
