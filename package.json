@@ -23,6 +23,11 @@
     "precommit": "lint-staged",
     "postcommit": "git update-index --again"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.ts": [
       "tslint --project tsconfig.json --fix",
@@ -62,6 +67,7 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-source-map-support": "^2.0.1",
     "clone": "^2.1.2",
+    "husky": "^1.1.4",
     "jest": "^23.6.0",
     "lint-staged": "^8.0.4",
     "serverless-iam-roles-per-function": "^1.0.4",
