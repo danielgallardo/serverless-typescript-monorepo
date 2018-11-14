@@ -103,3 +103,17 @@ functions:
           path: '/{userId}'
           method: get
           cors: true
+
+  listUsers:
+    handler: listUsers/handler.default
+    environment:
+      USERS_TABLE: ${self:custom.usersTable}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:Scan
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+    events:
+      - http:
+          path: '/'
+          method: get
+          cors: true
