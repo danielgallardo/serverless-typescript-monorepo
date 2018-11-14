@@ -1,9 +1,16 @@
 import {Model} from 'dynogels-promisified';
+import {NotFound} from 'http-errors';
 
 /**
- * List all items in dynamoDB table
+ * Gets an item from dynamoDB table
+ * Throws a NotFound http error if item is not found
  * This is an example of functional approach to extending dynogels model functionality
- * This method is too short but you can imagine listPaginated that implements some sort of pagination
  * @param model - dynogels Model
+ * @param hashKey
+ * @param rangeKey
  */
-export const listAsync = (model: Model) => model.scan().loadAll().execAsync();
+export const getItem = async (model: Model, hashKey: string, rangeKey?: string) => {
+  const item = await model.getAsync(hashKey, rangeKey);
+  if (!item) throw new NotFound('Item not found');
+  return item;
+};
