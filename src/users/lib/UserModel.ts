@@ -5,7 +5,7 @@ import {getEnv, Joi} from '../../lib/validation';
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
 // tslint:disable-next-line:variable-name
-const Model = dynogels.define('UsersTable', {
+export const UserModel = dynogels.define('UsersTable', {
   // Table name can be configured after initialization like this
   // Table.config({tableName: 'AccountsTable'});
 
@@ -26,16 +26,3 @@ const Model = dynogels.define('UsersTable', {
 
   log: bunyan.createLogger({name: 'UsersTable'})
 });
-
-// This is a simplest way to add custom methods to a Model
-// all methods should be static, new  UserModel() will return an Item
-// see https://github.com/clarkie/dynogels#saving-models-to-dynamodb
-
-export class UserModel extends Model {
-  /**
-   * List all items
-   */
-  public static listAsync() {
-    return super.scan().loadAll().execAsync();
-  }
-}
