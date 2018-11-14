@@ -7,5 +7,5 @@ type Params = {
 };
 
 export const getNote = async ({userId, noteId}: Params) => {
-  return getItem(NoteModel, userId, noteId);
+  return getItem(NoteModel)(userId, noteId);
 };

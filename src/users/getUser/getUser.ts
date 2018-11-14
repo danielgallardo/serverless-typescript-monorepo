@@ -6,6 +6,6 @@ type Params = {
 };
 
 export const getUser = async ({userId}: Params) => {
-  // As a convention use pure functions to extend dynogels functionality
-  return getItem(UserModel, userId);
+  // As a convention use curry functions to extend dynogels functionality
+  return getItem(UserModel)(userId);
 };

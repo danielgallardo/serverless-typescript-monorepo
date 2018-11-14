@@ -1,11 +1,11 @@
 import bunyan from 'bunyan';
 import dynogels from 'dynogels-promisified';
-import {getEnv, Joi} from '../../lib/validation';
+import {getEnv, Joi} from '../validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
 // tslint:disable-next-line:variable-name
-export const UserModel = dynogels.define('UsersTable', {
+export const UserModel = dynogels.define('user', {
   // Table name can be configured after initialization like this
   // Table.config({tableName: 'AccountsTable'});
 
@@ -24,5 +24,5 @@ export const UserModel = dynogels.define('UsersTable', {
     email: Joi.string().email()
   },
 
-  log: bunyan.createLogger({name: 'UsersTable'})
+  log: bunyan.createLogger({name: 'user'})
 });

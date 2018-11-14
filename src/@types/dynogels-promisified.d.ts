@@ -125,7 +125,7 @@ declare module 'dynogels-promisified' {
       action: LifeCycleAction,
       listner: (data: any, next: (err: Error | null, data: any) => void) => void
     ): void;
-    config(config: ModelConfig): {name: string};
+    config(config?: ModelConfig): {name: string};
 
     getAsync(hashKey: any, rangeKey: any, options: GetItemOptions): Promise<Item>;
     getAsync(haskKey: any, options: GetItemOptions): Promise<Item>;
