@@ -1,5 +1,5 @@
-import {IHandlerLambda, IMiddyNextFunction} from 'middy';
 import {SchemaLike, ValidationOptions} from 'joi';
+import {IHandlerLambda, IMiddyNextFunction} from 'middy';
 import {attempt} from '../validation';
 
 const defaultOptions = {

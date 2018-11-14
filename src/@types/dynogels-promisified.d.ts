@@ -1,3 +1,4 @@
+/* tslint:disable */
 declare module 'dynogels-promisified' {
   export import AWS = require('aws-sdk');
   import stream = require('stream');

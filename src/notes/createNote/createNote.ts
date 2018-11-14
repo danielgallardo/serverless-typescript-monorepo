@@ -1,4 +1,4 @@
-import {NotesTable} from '../lib/notesTable';
+import {notesTable} from '../lib/notesTable';
 
 type Params = {
   userId: string;
@@ -7,6 +7,5 @@ type Params = {
 };
 
 export const createNote = async (data: Params) => {
-  const note = await NotesTable.createAsync(data);
-  return note.toJSON();
+  return notesTable.createAsync(data);
 };

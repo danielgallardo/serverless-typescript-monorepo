@@ -17,10 +17,11 @@ export interface IJoi extends Root {
   timestamp(): this;
 }
 
-export interface ValidationConfig extends ValidationOptions {
+export interface IValidationConfig extends ValidationOptions {
   internal?: boolean;
 }
 
+// tslint:disable-next-line:variable-name
 export const Joi = _Joi.extend([
   {
     name: 'param',
@@ -49,7 +50,7 @@ export function attempt<T>(
   value: T,
   schema: SchemaLike,
   errorPrefix?: string,
-  options: ValidationConfig = {}
+  options: IValidationConfig = {}
 ): T {
   const {internal, ...joiOptions} = options;
   const result = Joi.validate<T>(value, schema, joiOptions);
@@ -70,7 +71,7 @@ export function assert<T>(
   value: T,
   schema: SchemaLike,
   errorPrefix?: string,
-  options: ValidationConfig = {}
+  options: IValidationConfig = {}
 ): void {
   const {internal, ...joiOptions} = options;
   const result = Joi.validate<T>(value, schema, joiOptions);

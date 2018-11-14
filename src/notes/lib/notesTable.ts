@@ -1,9 +1,10 @@
+import bunyan from 'bunyan';
 import dynogels from 'dynogels-promisified';
 import {getEnv, Joi} from '../../lib/validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
-export const NotesTable = dynogels.define('Note', {
+export const notesTable = dynogels.define('NotesTable', {
   tableName: getEnv('NOTES_TABLE'),
   hashKey: 'userId',
   rangeKey: 'id',
@@ -13,5 +14,6 @@ export const NotesTable = dynogels.define('Note', {
     userId: Joi.string(),
     title: Joi.string(),
     body: Joi.string()
-  }
+  },
+  log: bunyan.createLogger({name: 'NotesTable'})
 });

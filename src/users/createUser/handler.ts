@@ -1,9 +1,9 @@
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
 import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
+import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
-import {NormalizedEvent} from '../../@types';
-import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {createUser} from './createUser';
 
 // As a convention handler should not contain any business logic
@@ -27,7 +27,7 @@ const schema = {
     .options({stripUnknown: false})
 };
 
-const handler = async (event: NormalizedEvent) => {
+const handler = async (event: INormalizedEvent) => {
   // event.body will be an object parsed by apiRequestRoutine
   // and it will contain props that match the schema provided to eventValidator
   return createUser(event.body);

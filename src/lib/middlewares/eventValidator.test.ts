@@ -1,13 +1,13 @@
 import clone from 'clone';
-import {NormalizedEvent} from "../../@types";
-import {normalizedEvent} from "../fixtures/events";
-import {eventValidator} from './eventValidator';
 import Joi from 'joi';
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
+import {normalizedEvent} from '../fixtures/events';
 import {apiRequestRoutine} from './apiRequestRoutine';
+import {eventValidator} from './eventValidator';
 
 describe('eventValidator', () => {
-  let demoEvent: NormalizedEvent;
+  let demoEvent: INormalizedEvent;
   beforeEach(() => {
     demoEvent = clone(normalizedEvent);
   });
@@ -50,7 +50,7 @@ describe('eventValidator', () => {
       })
     };
 
-    const handler = middy(async (event: NormalizedEvent) => {
+    const handler = middy(async (event: INormalizedEvent) => {
       expect(event.body).toEqual({foo: 'bar'});
       return {foo: 'bar'};
     });

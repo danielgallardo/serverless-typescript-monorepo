@@ -1,5 +1,5 @@
-import {APIGatewayProxyEvent} from "aws-lambda";
-import {NormalizedEvent} from "../../@types";
+import {APIGatewayProxyEvent} from 'aws-lambda';
+import {INormalizedEvent} from '../../@types';
 
 export const event: APIGatewayProxyEvent = {
   resource: '/test',
@@ -44,7 +44,7 @@ export const event: APIGatewayProxyEvent = {
   isBase64Encoded: false
 };
 
-export const normalizedEvent: NormalizedEvent = {
+export const normalizedEvent: INormalizedEvent = {
   resource: '/test',
   path: '/test',
   httpMethod: 'POST',

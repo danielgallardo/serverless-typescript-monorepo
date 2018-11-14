@@ -1,8 +1,8 @@
 {
-  "name": "first-service",
+  "name": "@serverless-typescript-monorepo/users",
   "version": "1.0.0",
   "scripts": {
-    "test": "cd .. && yarn test --testPathPattern src/firstService"
+    "test": "cd .. && yarn test --testPathPattern src/users"
   },
   "author": "Dmitriy Nevzorov (dmitriy.nevzorov@microapps.com)",
   "license": "MIT",

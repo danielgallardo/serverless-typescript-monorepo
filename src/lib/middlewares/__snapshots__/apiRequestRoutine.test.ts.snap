@@ -44,6 +44,27 @@ Object {
 }
 `;
 
+exports[`apiRequestRoutine buildJSONResponse should build custom response if statusCode is present 1`] = `
+Object {
+  "body": "custom body",
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 200,
+}
+`;
+
+exports[`apiRequestRoutine buildJSONResponse should build no content if response is empty 1`] = `
+Object {
+  "headers": Object {
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Origin": "*",
+  },
+  "statusCode": 204,
+}
+`;
+
 exports[`apiRequestRoutine buildJSONResponse should build redirect response if redirectUrl is present 1`] = `
 Object {
   "headers": Object {

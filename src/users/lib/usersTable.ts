@@ -1,11 +1,12 @@
+import bunyan from 'bunyan';
 import dynogels from 'dynogels-promisified';
 import {getEnv, Joi} from '../../lib/validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
-export const UsersTable = dynogels.define('User', {
-  //Table name can be configured after initialization like this
-  //UsersTable.config({tableName: 'AccountsTable'});
+export const usersTable = dynogels.define('UsersTable', {
+  // Table name can be configured after initialization like this
+  // UsersTable.config({tableName: 'AccountsTable'});
 
   // getEnv method insures that env variable is defined
   // it will throw an error otherwise
@@ -20,5 +21,7 @@ export const UsersTable = dynogels.define('User', {
     id: dynogels.types.uuid(),
     name: Joi.string(),
     email: Joi.string().email()
-  }
+  },
+
+  log: bunyan.createLogger({name: 'UsersTable'})
 });

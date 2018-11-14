@@ -1,6 +1,9 @@
 import {APIGatewayProxyEvent} from 'aws-lambda';
-import {NormalizedEvent} from "../../@types";
-import {event} from "../fixtures/events";
+import clone from 'clone';
+import {NotFound, UnprocessableEntity} from 'http-errors';
+import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
+import {event} from '../fixtures/events';
 import {Joi} from '../validation';
 import {
   apiRequestRoutine,
@@ -9,9 +12,6 @@ import {
   parseJSONBody,
   setDefaultParams
 } from './apiRequestRoutine';
-import {UnprocessableEntity, NotFound} from 'http-errors';
-import middy from 'middy';
-import clone from 'clone';
 
 describe('apiRequestRoutine', () => {
   let demoEvent: APIGatewayProxyEvent;
@@ -48,6 +48,14 @@ describe('apiRequestRoutine', () => {
     expect(buildJSONResponse({redirectUrl: 'https://example.com'})).toMatchSnapshot();
   });
 
+  it('buildJSONResponse should build custom response if statusCode is present', () => {
+    expect(buildJSONResponse({statusCode: 200, body: 'custom body'})).toMatchSnapshot();
+  });
+
+  it('buildJSONResponse should build no content if response is empty', () => {
+    expect(buildJSONResponse(undefined)).toMatchSnapshot();
+  });
+
   it('buildErrorResponse should build a correct response object in case of the internal error', () => {
     expect(buildErrorResponse(new Error('Some internal error'))).toMatchSnapshot();
   });
@@ -63,7 +71,7 @@ describe('apiRequestRoutine', () => {
   });
 
   it('should normalize event', () => {
-    const handler = middy(async (event: NormalizedEvent) => {
+    const handler = middy(async (event: INormalizedEvent) => {
       expect(event).toMatchSnapshot();
     });
     handler.use(apiRequestRoutine());

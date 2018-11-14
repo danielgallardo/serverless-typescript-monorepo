@@ -1,5 +1,5 @@
 declare module 'http-errors' {
-  interface HttpError extends Error {
+  interface IHttpError extends Error {
     status: number;
     statusCode: number;
     expose: boolean;
@@ -9,11 +9,11 @@ declare module 'http-errors' {
     [key: string]: any;
   }
 
-  type HttpErrorConstructor = new (msg?: string) => HttpError;
+  type HttpErrorConstructor = new (msg?: string) => IHttpError;
 
   type CreateHttpError = (
     ...args: Array<Error | string | number | {[key: string]: any}>
-  ) => HttpError;
+  ) => IHttpError;
 
   type NamedConstructors = {
     [code: string]: HttpErrorConstructor;
