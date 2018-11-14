@@ -19,7 +19,9 @@
   ],
   "scripts": {
     "test": "jest --watch",
-    "lint": "tslint -t stylish --project tsconfig.json --fix 'src/**/*.ts'"
+    "lint": "tslint -t stylish --project tsconfig.json --fix 'src/**/*.ts'",
+    "precommit": "lint-staged",
+    "postcommit": "git update-index --again"
   },
   "husky": {
     "hooks": {
