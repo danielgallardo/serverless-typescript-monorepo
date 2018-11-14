@@ -1,9 +1,9 @@
-import {usersTable} from '../lib/usersTable';
+import {UserModel} from '../lib/UserModel';
 
 type Params = {
   userId: string;
 };
 
 export const getUser = async ({userId}: Params) => {
-  return usersTable.getAsync(userId);
+  return UserModel.getAsync(userId);
 };

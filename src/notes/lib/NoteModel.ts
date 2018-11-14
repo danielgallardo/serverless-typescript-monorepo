@@ -4,7 +4,8 @@ import {getEnv, Joi} from '../../lib/validation';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
-export const notesTable = dynogels.define('NotesTable', {
+// tslint:disable-next-line:variable-name
+export const NoteModel = dynogels.define('NotesTable', {
   tableName: getEnv('NOTES_TABLE'),
   hashKey: 'userId',
   rangeKey: 'id',

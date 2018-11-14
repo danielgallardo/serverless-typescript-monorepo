@@ -1,4 +1,4 @@
-import {notesTable} from '../lib/notesTable';
+import {NoteModel} from '../lib/NoteModel';
 
 type Params = {
   userId: string;
@@ -6,5 +6,5 @@ type Params = {
 };
 
 export const getNote = async ({userId, noteId}: Params) => {
-  return notesTable.getAsync(userId, noteId);
+  return NoteModel.getAsync(userId, noteId);
 };
