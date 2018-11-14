@@ -1,4 +1,4 @@
-import {NoteModel} from '../lib/NoteModel';
+import {NoteModel} from '../../lib/models/NoteModel';
 
 type Params = {
   userId: string;

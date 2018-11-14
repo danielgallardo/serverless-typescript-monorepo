@@ -21,6 +21,7 @@ custom:
   # get users table name from config.yml or use default
   # that is used in root serverless.yml when table is created
   usersTable: ${self:custom.config.usersTableName, '${self:custom.prefix}-usersTable'}
+  notesTable: ${self:custom.config.notesTableName, '${self:custom.prefix}-notesTable'}
 
   # webpack config
   # read more - https://github.com/serverless-heaven/serverless-webpack
@@ -82,10 +83,15 @@ functions:
     handler: deleteUser/handler.default
     environment:
       USERS_TABLE: ${self:custom.usersTable}
+      NOTES_TABLE: ${self:custom.notesTable}
     iamRoleStatements:
       - Effect: Allow
-        Action: dynamodb:DeleteItem
-        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+        Action:
+          - dynamodb:DeleteItem
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.usersTable}
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.notesTable}
     events:
       - http:
           path: '/{userId}'
