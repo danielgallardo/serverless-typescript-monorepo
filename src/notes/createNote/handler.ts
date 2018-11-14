@@ -1,10 +1,10 @@
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
 import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
+import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
 import {createNote} from './createNote';
-import {INormalizedEvent} from '../../@types';
-import {eventValidator} from '../../lib/middlewares/eventValidator';
 
 interface IEvent extends INormalizedEvent {
   pathParameters: {

@@ -1,10 +1,10 @@
 import clone from 'clone';
-import {INormalizedEvent} from '../../@types';
-import {normalizedEvent} from '../fixtures/events';
-import {eventValidator} from './eventValidator';
 import Joi from 'joi';
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
+import {normalizedEvent} from '../fixtures/events';
 import {apiRequestRoutine} from './apiRequestRoutine';
+import {eventValidator} from './eventValidator';
 
 describe('eventValidator', () => {
   let demoEvent: INormalizedEvent;

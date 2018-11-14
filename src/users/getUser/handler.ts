@@ -1,10 +1,10 @@
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
 import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
+import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
 import {getUser} from './getUser';
-import {INormalizedEvent} from '../../@types';
-import {eventValidator} from '../../lib/middlewares/eventValidator';
 
 interface IEvent extends INormalizedEvent {
   // path parameter matches {userId} part of the url

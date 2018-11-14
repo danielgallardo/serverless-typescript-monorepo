@@ -1,6 +1,6 @@
 // @ts-ignore
-import joiErrorFormatter from 'joi-error-formatter';
 import {ValidationError} from 'joi';
+import joiErrorFormatter from 'joi-error-formatter';
 
 export type JoiErrorOptions = {
   errorPrefix?: string;

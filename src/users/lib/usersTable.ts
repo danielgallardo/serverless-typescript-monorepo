@@ -1,6 +1,6 @@
+import bunyan from 'bunyan';
 import dynogels from 'dynogels-promisified';
 import {getEnv, Joi} from '../../lib/validation';
-import bunyan from 'bunyan';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 

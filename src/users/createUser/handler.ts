@@ -1,9 +1,9 @@
 import middy from 'middy';
+import {INormalizedEvent} from '../../@types';
 import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
+import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
-import {INormalizedEvent} from '../../@types';
-import {eventValidator} from '../../lib/middlewares/eventValidator';
 import {createUser} from './createUser';
 
 // As a convention handler should not contain any business logic

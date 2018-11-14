@@ -1,4 +1,7 @@
 import {APIGatewayProxyEvent} from 'aws-lambda';
+import clone from 'clone';
+import {NotFound, UnprocessableEntity} from 'http-errors';
+import middy from 'middy';
 import {INormalizedEvent} from '../../@types';
 import {event} from '../fixtures/events';
 import {Joi} from '../validation';
@@ -9,9 +12,6 @@ import {
   parseJSONBody,
   setDefaultParams
 } from './apiRequestRoutine';
-import {UnprocessableEntity, NotFound} from 'http-errors';
-import middy from 'middy';
-import clone from 'clone';
 
 describe('apiRequestRoutine', () => {
   let demoEvent: APIGatewayProxyEvent;
