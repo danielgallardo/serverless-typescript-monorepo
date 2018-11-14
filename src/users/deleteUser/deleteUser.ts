@@ -7,18 +7,18 @@ type Params = {
 
 export const deleteUser = async ({userId}: Params) => {
   // check if there are notes for this user
-  NoteModel.query(userId).limit(1).execAsync().then((data) => {
-    if (data.Count > 0) {
-      return {
-        statusCode: 422
-      }
-    } else {
-      // if any note for user then destroy it
-      UserModel.destroyAsync(userId).then(() => {
-        return {
-          message: data.Count
-        }
-      });
+  const notes = await NoteModel.query(userId).limit(1).execAsync();
+
+  if (notes.Count > 0) {
+    // if there are notes fot his user send a 422 Unprocessable Entity Errpr
+    return {
+      statusCode: 422
     }
-  });
+  } else {
+    // else destroy the user and return a 204 empty response
+    await UserModel.destroyAsync(userId);
+    return {
+      statusCode: 204
+    }
+  }
 };
