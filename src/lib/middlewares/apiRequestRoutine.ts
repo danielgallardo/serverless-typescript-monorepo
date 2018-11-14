@@ -44,26 +44,27 @@ export const setDefaultParams = (event: APIGatewayProxyEvent): void => {
   }
 };
 
-type Response = {
+interface IResponse {
   statusCode?: number;
   [key: string]: any;
-};
+}
 
 /**
  * Builds a valid ApiGateway response based on returned value
  * redirects if response contains redirectUrl
  * @param response
  */
-export const buildJSONResponse = (response?: Response): Response => {
+export const buildJSONResponse = (response?: IResponse): IResponse => {
   // return No Content response if there is no content
-  if (!response)
+  if (!response) {
     return {
       statusCode: 204,
       headers: DEFAULT_HEADERS
     };
+  }
 
   // return response directly if it contains statusCode
-  if (response.statusCode)
+  if (response.statusCode) {
     return {
       ...response,
       headers: {
@@ -71,9 +72,10 @@ export const buildJSONResponse = (response?: Response): Response => {
         ...response.headers
       }
     };
+  }
 
   // return redirect response if redirectUrl is defined
-  if (response.redirectUrl)
+  if (response.redirectUrl) {
     return {
       statusCode: 302,
       headers: {
@@ -81,6 +83,7 @@ export const buildJSONResponse = (response?: Response): Response => {
         Location: response.redirectUrl
       }
     };
+  }
 
   return {
     statusCode: 200,
@@ -123,8 +126,8 @@ const getPublicError = (error: Error) => {
  * Builds a valid ApiGateway error response based on error
  * @param error
  */
-export const buildErrorResponse = (error: Error): Response => {
-  let httpError = getPublicError(error);
+export const buildErrorResponse = (error: Error): IResponse => {
+  const httpError = getPublicError(error);
   return {
     statusCode: httpError.statusCode,
     headers: DEFAULT_HEADERS,

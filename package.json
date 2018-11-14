@@ -4,9 +4,6 @@
   "description": "A serverless monorepo boilerplate with babel 7 and typescript ",
   "main": "index.js",
   "private": true,
-  "scripts": {
-    "test": "jest --watch"
-  },
   "keywords": [
     "serverless",
     "aws",
@@ -20,6 +17,18 @@
   "workspaces": [
     "src/*"
   ],
+  "scripts": {
+    "test": "jest --watch",
+    "lint": "tslint -t stylish --project tsconfig.json --fix 'src/**/*.ts'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": ["tslint -t stylish --project tsconfig.json --fix", "git add"]
+  },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "bunyan": "^1.8.12",
@@ -53,11 +62,15 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-source-map-support": "^2.0.1",
     "clone": "^2.1.2",
+    "husky": "^1.1.4",
     "jest": "^23.6.0",
+    "lint-staged": "^8.0.4",
     "serverless-iam-roles-per-function": "^1.0.4",
     "serverless-pseudo-parameters": "^2.2.0",
     "serverless-webpack": "^5.2.0",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
+    "tslint-eslint-rules": "^5.4.0",
     "tslint-microsoft-contrib": "^5.2.1",
     "typescript": "^3.1.6",
     "webpack": "^4.25.1",

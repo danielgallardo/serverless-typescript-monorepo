@@ -3,10 +3,10 @@ import {apiRequestRoutine} from '../../lib/middlewares/apiRequestRoutine';
 import {logRoutine} from '../../lib/middlewares/logRoutine';
 import {Joi} from '../../lib/validation';
 import {createNote} from './createNote';
-import {NormalizedEvent} from '../../@types';
+import {INormalizedEvent} from '../../@types';
 import {eventValidator} from '../../lib/middlewares/eventValidator';
 
-interface Event extends NormalizedEvent {
+interface IEvent extends INormalizedEvent {
   pathParameters: {
     userId: string;
   };
@@ -28,7 +28,7 @@ const schema = {
     .options({stripUnknown: false})
 };
 
-const handler = async (event: Event) => {
+const handler = async (event: IEvent) => {
   return createNote({
     title: event.body.title,
     body: event.body.body,

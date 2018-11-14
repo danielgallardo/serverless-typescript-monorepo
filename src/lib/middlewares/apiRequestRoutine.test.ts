@@ -1,5 +1,5 @@
 import {APIGatewayProxyEvent} from 'aws-lambda';
-import {NormalizedEvent} from '../../@types';
+import {INormalizedEvent} from '../../@types';
 import {event} from '../fixtures/events';
 import {Joi} from '../validation';
 import {
@@ -71,7 +71,7 @@ describe('apiRequestRoutine', () => {
   });
 
   it('should normalize event', () => {
-    const handler = middy(async (event: NormalizedEvent) => {
+    const handler = middy(async (event: INormalizedEvent) => {
       expect(event).toMatchSnapshot();
     });
     handler.use(apiRequestRoutine());

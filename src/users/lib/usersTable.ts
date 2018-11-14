@@ -4,7 +4,7 @@ import bunyan from 'bunyan';
 
 dynogels.AWS.config.update({region: getEnv('AWS_REGION')});
 
-export const UsersTable = dynogels.define('UsersTable', {
+export const usersTable = dynogels.define('UsersTable', {
   // Table name can be configured after initialization like this
   // UsersTable.config({tableName: 'AccountsTable'});
 

@@ -1,6 +1,6 @@
 import {APIGatewayEventRequestContext} from 'aws-lambda';
 
-export interface NormalizedEvent {
+export interface INormalizedEvent {
   headers: {
     [name: string]: string;
   };

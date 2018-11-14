@@ -11,10 +11,11 @@ export type JoiErrorOptions = {
  * Custom Joi error to simplify CloudWatch logging
  */
 export class JoiError extends Error {
-  isJoi: boolean;
-  internal: boolean;
-  details: object[];
-  _object: object;
+  public isJoi: boolean;
+  public internal: boolean;
+  public details: object[];
+  // tslint:disable-next-line:variable-name
+  public _object: object;
 
   constructor(joiError: ValidationError, {errorPrefix, internal}: JoiErrorOptions = {}) {
     let message = joiErrorFormatter(joiError);
