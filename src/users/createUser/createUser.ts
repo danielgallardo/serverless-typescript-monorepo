@@ -1,4 +1,4 @@
-import {UserModel} from '../lib/UserModel';
+import {UserModel} from '../../lib/models/UserModel';
 
 type Params = {
   name: string;
