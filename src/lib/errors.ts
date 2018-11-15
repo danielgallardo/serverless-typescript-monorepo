@@ -1,5 +1,5 @@
-// @ts-ignore
 import {ValidationError} from 'joi';
+// @ts-ignore
 import joiErrorFormatter from 'joi-error-formatter';
 
 export type JoiErrorOptions = {

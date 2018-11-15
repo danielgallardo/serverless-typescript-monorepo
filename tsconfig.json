@@ -20,7 +20,9 @@
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "__mocks__/*",
+    "toCopy.ts"
   ],
   "exclude": [
     "node_modules",

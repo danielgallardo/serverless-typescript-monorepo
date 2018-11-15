@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ElasticModel bulkIndex should create index if missing 1`] = `
+Object {
+  "errors": false,
+  "items": Array [
+    Object {
+      "index": Object {
+        "_id": "some_id",
+        "_index": "missing-index",
+        "_type": "missing-index",
+      },
+    },
+  ],
+  "took": 6,
+}
+`;
+
+exports[`ElasticModel bulkIndex should not create index if already exists 1`] = `
+Object {
+  "errors": false,
+  "items": Array [
+    Object {
+      "index": Object {
+        "_id": "some_id",
+        "_index": "existing-index",
+        "_type": "existing-index",
+      },
+    },
+  ],
+  "took": 6,
+}
+`;
+
+exports[`ElasticModel deleteIndex should work correctly 1`] = `
+Object {
+  "acknowledged": true,
+}
+`;
+
+exports[`ElasticModel indexFromDynamoDBStream should generate correct bulk request 1`] = `
+Array [
+  Object {
+    "body": Array [
+      Object {
+        "index": Object {
+          "_id": "some-id",
+          "_index": "existing-index",
+          "_type": "existing-index",
+        },
+      },
+      Object {
+        "email": "email@example.com",
+        "id": "some-id",
+      },
+      Object {
+        "delete": Object {
+          "_id": "some-id",
+          "_index": "existing-index",
+          "_type": "existing-index",
+        },
+      },
+      Object {
+        "update": Object {
+          "_id": "some-id",
+          "_index": "existing-index",
+          "_type": "existing-index",
+        },
+      },
+      Object {
+        "doc": Object {
+          "email": "email@example.com",
+          "id": "some-id",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`ElasticModel query should work correctly 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "id": 0,
+    },
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 4,
+    },
+  ],
+  "nextPage": "10",
+  "prevPage": "0",
+  "total": 25,
+}
+`;
+
+exports[`ElasticModel search should return correct result 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "id": 0,
+    },
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 4,
+    },
+  ],
+  "nextPage": "10",
+  "prevPage": "0",
+  "total": 25,
+}
+`;
+
+exports[`ElasticModel should throw en error if required config is missing 1`] = `"ElasticModel config: \\"host\\" is required"`;
+
+exports[`ElasticModel should throw en error if required config is missing 2`] = `"ElasticModel config: \\"indexName\\" is required"`;
+
+exports[`ElasticModel should throw en error if required config is missing 3`] = `"ElasticModel config: \\"indexName\\" is required"`;
