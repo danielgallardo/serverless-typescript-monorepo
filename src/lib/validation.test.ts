@@ -1,5 +1,8 @@
 import {assert, attempt, getEnv, Joi} from './validation';
 
+// define env variables for your test at the top
+process.env.AWS_REGION = 'eu-west-1';
+
 const schema = Joi.object().keys({
   foo: Joi.string().required()
 });
@@ -22,14 +25,14 @@ describe('validation', () => {
   });
 
   it('getEnv should return env variable', () => {
-    expect(getEnv('NODE_ENV')).toBe('test');
+    expect(getEnv('AWS_REGION')).toBe('eu-west-1');
     expect(getEnv('MISSING_VAR', 'foo')).toBe('foo');
   });
 
   it('getEnv should throw error if variable is not defined', () => {
     const spy = jest.spyOn(console, 'log');
     expect(getEnv.bind(null, 'MISSING_VAR')).toThrowErrorMatchingSnapshot();
-    expect(spy.mock.calls[0]).toMatchSnapshot();
+    expect(spy.mock.calls[0][0]).toBe('== MISSING ENV VARIABLE: "MISSING_VAR" ==');
   });
 
   it('Joi.param should correctly validate query and path parameters', () => {
